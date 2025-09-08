@@ -6,24 +6,14 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 13:52:56 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/04 14:46:13 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/05 14:42:54 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string>
 #include <iostream>
-
-enum SCALARTYPES
-{
-    CHAR,
-    INT,
-    FLOAT,
-    DOUBLE,
-    INFPLUS,
-    INFMINUS,
-    NAN,
-    INVALID
-};
+#include <iomanip>
+#include "utils.hpp"
 
 class ScalarConverter
 {

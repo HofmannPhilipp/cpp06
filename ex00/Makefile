@@ -2,7 +2,7 @@ NAME = converter
 CXX = c++
 CXXFLAGS = -std=c++17 -Wall -Wextra -Werror
 
-SRCS = main.cpp ScalarConverter.cpp
+SRCS = main.cpp ScalarConverter.cpp utils.cpp
 OBJS_DIR = objects
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 

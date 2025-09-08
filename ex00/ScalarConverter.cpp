@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:04:42 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/04 15:02:14 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/05 14:47:55 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,38 +27,64 @@ const ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 
 ScalarConverter::~ScalarConverter() {};
 
-std::ostream &operator<<(std::ostream &os, SCALARTYPES type)
+void displayChar(const std::string &value)
 {
-    switch (type)
-    {
-    case INT:
-        return os << "INT";
-    case FLOAT:
-        return os << "FLOAT";
-    case DOUBLE:
-        return os << "DOUBLE";
-    case INVALID:
-        return os << "INVALID";
-    default:
-        return os << "Unknwon type";
-    }
+    char c = static_cast<char>(value[0]);
+    int i = static_cast<int>(c);
+    float f = static_cast<float>(c);
+    double d = static_cast<double>(c);
+    printChar(c, getPseudoLiteral(value));
+    printInt(i, getPseudoLiteral(value));
+    printFloat(f);
+    printDouble(d);
 }
 
-void displayChar(char c)
+void displayInt(const std::string &value)
 {
-    std::cout << "char: ";
-    if (!std::isprint(c))
-        std::cout << "Non displayable" << std::endl;
-    else
-        std::cout << c << std::endl;
+    int i = static_cast<int>(std::stod(value));
+    char c = static_cast<char>(i);
+    float f = static_cast<float>(i);
+    double d = static_cast<double>(i);
+    printChar(c, getPseudoLiteral(value));
+    printInt(i, getPseudoLiteral(value));
+    printFloat(f);
+    printDouble(d);
+}
+
+void displayFloat(const std::string &value)
+{
+
+    float f = static_cast<float>(std::stod(value));
+    int i = static_cast<int>(f);
+    char c = static_cast<char>(f);
+    double d = static_cast<double>(f);
+    printChar(c, getPseudoLiteral(value));
+    printInt(i, getPseudoLiteral(value));
+    printFloat(f);
+    printDouble(d);
+}
+void displayDouble(const std::string &value)
+{
+
+    double d = static_cast<double>(std::stod(value));
+    float f = static_cast<float>(d);
+    int i = static_cast<int>(d);
+    char c = static_cast<char>(d);
+    printChar(c, getPseudoLiteral(value));
+    printInt(i, getPseudoLiteral(value));
+    printFloat(f);
+    printDouble(d);
 }
 
 bool isNumber(const std::string &s)
 {
     try
     {
-        std::stod(s);
-        return true;
+        size_t pos;
+        std::stod(s, &pos);
+        if (pos == s.length())
+            return true;
+        return false;
     }
     catch (std::invalid_argument &)
     {
@@ -70,38 +96,57 @@ bool isNumber(const std::string &s)
     }
 }
 
-// void displayPrimitaveTypes(char c, int i, float f, double d)
-// {
+void displayPrimitaveTypes(std::string value, EScalarType type)
+{
+    if (type == EScalarType::CHAR)
+    {
+        displayChar(value);
+    }
+    if (type == EScalarType::INT)
+    {
+        displayInt(value);
+    }
+    if (type == EScalarType::FLOAT)
+    {
+        displayFloat(value);
+    }
+    if (type == EScalarType::DOUBLE)
+    {
+        displayDouble(value);
+    }
+}
 
-//     displayChar(c);
-//     std::cout << "float :" << f << std::endl;
-//     std::cout << "double :" << d << std::endl;
-// }
-
-SCALARTYPES getScalarType(const std::string &value)
+EScalarType getScalarType(const std::string &value)
 {
     size_t len = value.length();
+    EPseudoLiteral pseudoLiteral = getPseudoLiteral(value);
+    bool isNum = isNumber(value);
+    size_t dotPos = value.find('.');
 
     // Char check
     if (len == 1 && !std::isdigit(value[0]))
-        return CHAR;
+        return EScalarType::CHAR;
 
     // Int check
-    if (value.find('.') == std::string::npos && isNumber(value))
-        return INT;
+    if (pseudoLiteral == EPseudoLiteral::NONE && dotPos == std::string::npos && isNum)
+        return EScalarType::INT;
 
     // Float check
-    if (value.back() == 'f' && isNumber(value.substr(0, len - 1)))
-        return FLOAT;
+    if ((dotPos != std::string::npos || pseudoLiteral != EPseudoLiteral::NONE) && value.back() == 'f' && isNumber(value.substr(0, len - 1)))
+        return EScalarType::FLOAT;
 
     // Double check
-    if (isNumber(value))
-        return DOUBLE;
+    if ((dotPos != std::string::npos || pseudoLiteral != EPseudoLiteral::NONE) && isNum)
+        return EScalarType::DOUBLE;
 
-    return INVALID;
+    return EScalarType::INVALID;
 }
 
 void ScalarConverter::convert(std::string value)
 {
-    std::cout << getScalarType(value) << std::endl;
+    EScalarType type = getScalarType(value);
+    if (type == EScalarType::INVALID)
+        return;
+    std::cout << type << std::endl;
+    displayPrimitaveTypes(value, type);
 }
