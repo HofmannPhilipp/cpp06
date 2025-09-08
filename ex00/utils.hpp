@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:32:37 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/05 14:49:09 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/08 13:58:24 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <limits>
 #include <string>
 
 enum class EScalarType

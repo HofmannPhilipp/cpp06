@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:24:06 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/05 14:50:07 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/08 14:02:54 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ EPseudoLiteral getPseudoLiteral(const std::string &value)
 
 void printChar(char c, EPseudoLiteral pl)
 {
-    std::cout << "Char     : ";
+    std::cout << "Char      : ";
     if (pl != EPseudoLiteral::NONE)
         std::cout << "impossible" << std::endl;
     else if (!std::isprint(c))
@@ -74,7 +74,7 @@ void printFloat(float f)
     if (std::floor(f) == f)
         std::cout << std::fixed << std::setprecision(1) << f << "f" << std::endl;
     else
-        std::cout << std::defaultfloat << f << "f" << std::endl;
+        std::cout << std::setprecision(std::numeric_limits<float>::max_digits10) << f << "f" << std::endl;
 }
 
 void printDouble(double d)
@@ -83,5 +83,5 @@ void printDouble(double d)
     if (std::floor(d) == d)
         std::cout << std::fixed << std::setprecision(1) << d << std::endl;
     else
-        std::cout << std::defaultfloat << d << std::endl;
+        std::cout << std::setprecision(std::numeric_limits<double>::max_digits10) << d << std::endl;
 }

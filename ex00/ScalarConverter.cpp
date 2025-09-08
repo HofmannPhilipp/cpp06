@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:04:42 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/05 14:47:55 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/08 13:51:11 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,9 @@ void ScalarConverter::convert(std::string value)
 {
     EScalarType type = getScalarType(value);
     if (type == EScalarType::INVALID)
+    {
+        std::cout << "Invalid value" << std::endl;
         return;
-    std::cout << type << std::endl;
+    }
     displayPrimitaveTypes(value, type);
 }
