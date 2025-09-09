@@ -6,52 +6,52 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:24:06 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/09 13:02:40 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:50:17 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.hpp"
 
-std::ostream &operator<<(std::ostream &os, EScalarType type)
+std::ostream &operator<<(std::ostream &os, e_scalarType type)
 {
     switch (type)
     {
-    case EScalarType::INT:
+    case e_scalarType::INT:
         return os << "INT";
-    case EScalarType::CHAR:
+    case e_scalarType::CHAR:
         return os << "CHAR";
-    case EScalarType::FLOAT:
+    case e_scalarType::FLOAT:
         return os << "FLOAT";
-    case EScalarType::DOUBLE:
+    case e_scalarType::DOUBLE:
         return os << "DOUBLE";
-    case EScalarType::INVALID:
+    case e_scalarType::INVALID:
         return os << "INVALID";
     default:
         return os << "Unkwnon type";
     }
 }
 
-EPseudoLiteral getPseudoLiteral(const std::string &value)
+e_pseudoLiteral getPseudoLiteral(const std::string &value)
 {
     if (value == "nan")
-        return EPseudoLiteral::NAN_D;
+        return e_pseudoLiteral::NAN_D;
     if (value == "+inf")
-        return EPseudoLiteral::POS_INF;
+        return e_pseudoLiteral::POS_INF;
     if (value == "-inf")
-        return EPseudoLiteral::NEG_INF;
+        return e_pseudoLiteral::NEG_INF;
     if (value == "nanf")
-        return EPseudoLiteral::NANF;
+        return e_pseudoLiteral::NANF;
     if (value == "+inff")
-        return EPseudoLiteral::POS_INFF;
+        return e_pseudoLiteral::POS_INFF;
     if (value == "-inff")
-        return EPseudoLiteral::NEG_INFF;
-    return EPseudoLiteral::NONE;
+        return e_pseudoLiteral::NEG_INFF;
+    return e_pseudoLiteral::NONE;
 }
 
-void printChar(char c, EPseudoLiteral pl)
+void printChar(char c, e_pseudoLiteral pl)
 {
     std::cout << "Char      : ";
-    if (pl != EPseudoLiteral::NONE)
+    if (pl != e_pseudoLiteral::NONE)
         std::cout << "impossible" << std::endl;
     else if (!std::isprint(c))
         std::cout << "Non displayable" << std::endl;
@@ -59,10 +59,10 @@ void printChar(char c, EPseudoLiteral pl)
         std::cout << c << std::endl;
 }
 
-void printInt(int i, EPseudoLiteral pl)
+void printInt(int i, e_pseudoLiteral pl)
 {
     std::cout << "Int       : ";
-    if (pl != EPseudoLiteral::NONE)
+    if (pl != e_pseudoLiteral::NONE)
         std::cout << "impossible" << std::endl;
     else
         std::cout << i << std::endl;

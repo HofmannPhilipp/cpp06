@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:04:42 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/09 13:38:56 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/09 14:00:02 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ void displayInt(const std::string &value)
     char c = static_cast<char>(i);
     float f = static_cast<float>(i);
     double d = static_cast<double>(i);
-    if (i < 0 || i > 127)
-        printChar(c, EPseudoLiteral::NAN_D);
-    else
-        printChar(c, getPseudoLiteral(value));
 
+    printChar(c, getPseudoLiteral(value));
     printInt(i, getPseudoLiteral(value));
     printFloat(f);
     printDouble(d);
@@ -102,64 +99,65 @@ bool isNumber(const std::string &s)
     }
 }
 
-void displayPrimitaveTypes(std::string value, EScalarType type)
+void displayPrimitaveTypes(std::string value, e_scalarType type)
 {
-    if (type == EScalarType::CHAR)
+    if (type == e_scalarType::CHAR)
     {
         displayChar(value);
     }
-    if (type == EScalarType::INT)
+    if (type == e_scalarType::INT)
     {
         displayInt(value);
     }
-    if (type == EScalarType::FLOAT)
+    if (type == e_scalarType::FLOAT)
     {
         displayFloat(value);
     }
-    if (type == EScalarType::DOUBLE)
+    if (type == e_scalarType::DOUBLE)
     {
         displayDouble(value);
     }
 }
 
-EScalarType getScalarType(const std::string &value)
+e_scalarType getScalarType(const std::string &value)
 {
     size_t len = value.length();
-    EPseudoLiteral pseudoLiteral = getPseudoLiteral(value);
+    e_pseudoLiteral pseudoLiteral = getPseudoLiteral(value);
     bool isNum = isNumber(value);
     size_t dotPos = value.find('.');
 
-    if (pseudoLiteral != EPseudoLiteral::NONE)
+    // Pseudoliteral check
+    if (pseudoLiteral != e_pseudoLiteral::NONE)
     {
         if (value.back() == 'f')
-            return EScalarType::FLOAT;
+            return e_scalarType::FLOAT;
         else
-            return EScalarType::DOUBLE;
+            return e_scalarType::DOUBLE;
     }
 
     // Char check
     if (len == 1 && !std::isdigit(value[0]))
-        return EScalarType::CHAR;
+        return e_scalarType::CHAR;
 
     // Int check
     if (dotPos == std::string::npos && isNum)
-        return EScalarType::INT;
+        return e_scalarType::INT;
 
     // Float check
     if (dotPos != std::string::npos && value.back() == 'f' && isNumber(value.substr(0, len - 1)))
-        return EScalarType::FLOAT;
+        return e_scalarType::FLOAT;
 
     // Double check
     if (dotPos != std::string::npos && isNum)
-        return EScalarType::DOUBLE;
+        return e_scalarType::DOUBLE;
 
-    return EScalarType::INVALID;
+    return e_scalarType::INVALID;
 }
 
 void ScalarConverter::convert(std::string value)
 {
-    EScalarType type = getScalarType(value);
-    if (type == EScalarType::INVALID)
+    e_scalarType type = getScalarType(value);
+    if (type == e_scalarType::INVALID)
     {
         std::cout << "Invalid value" << std::endl;
         return;

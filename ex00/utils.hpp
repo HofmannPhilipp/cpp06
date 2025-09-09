@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 14:32:37 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/08 13:58:24 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:47:31 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <limits>
 #include <string>
 
-enum class EScalarType
+enum class e_scalarType
 {
     CHAR,
     INT,
@@ -26,7 +26,7 @@ enum class EScalarType
     INVALID
 };
 
-enum class EPseudoLiteral
+enum class e_pseudoLiteral
 {
     NAN_D,
     POS_INF,
@@ -36,9 +36,9 @@ enum class EPseudoLiteral
     NEG_INFF,
     NONE
 };
-std::ostream &operator<<(std::ostream &os, EScalarType type);
-EPseudoLiteral getPseudoLiteral(const std::string &value);
-void printChar(char c, EPseudoLiteral pl);
-void printInt(int i, EPseudoLiteral pl);
+std::ostream &operator<<(std::ostream &os, e_scalarType type);
+e_pseudoLiteral getPseudoLiteral(const std::string &value);
+void printChar(char c, e_pseudoLiteral pl);
+void printInt(int i, e_pseudoLiteral pl);
 void printFloat(float f);
 void printDouble(double d);
