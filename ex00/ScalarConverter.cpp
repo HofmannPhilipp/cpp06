@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:04:42 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/09 13:06:20 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:38:56 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void displayDouble(const std::string &value)
 
 bool isNumber(const std::string &s)
 {
+    if (s == "inf" || s == "+nan" || s == "-nan")
+        return false;
     try
     {
         size_t pos;
@@ -127,20 +129,28 @@ EScalarType getScalarType(const std::string &value)
     bool isNum = isNumber(value);
     size_t dotPos = value.find('.');
 
+    if (pseudoLiteral != EPseudoLiteral::NONE)
+    {
+        if (value.back() == 'f')
+            return EScalarType::FLOAT;
+        else
+            return EScalarType::DOUBLE;
+    }
+
     // Char check
     if (len == 1 && !std::isdigit(value[0]))
         return EScalarType::CHAR;
 
     // Int check
-    if (pseudoLiteral == EPseudoLiteral::NONE && dotPos == std::string::npos && isNum)
+    if (dotPos == std::string::npos && isNum)
         return EScalarType::INT;
 
     // Float check
-    if ((dotPos != std::string::npos || pseudoLiteral != EPseudoLiteral::NONE) && value.back() == 'f' && isNumber(value.substr(0, len - 1)))
+    if (dotPos != std::string::npos && value.back() == 'f' && isNumber(value.substr(0, len - 1)))
         return EScalarType::FLOAT;
 
     // Double check
-    if ((dotPos != std::string::npos || pseudoLiteral != EPseudoLiteral::NONE) && isNum)
+    if (dotPos != std::string::npos && isNum)
         return EScalarType::DOUBLE;
 
     return EScalarType::INVALID;
