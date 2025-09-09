@@ -6,7 +6,7 @@
 /*   By: phhofman <phhofman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 14:04:42 by phhofman          #+#    #+#             */
-/*   Updated: 2025/09/08 13:51:11 by phhofman         ###   ########.fr       */
+/*   Updated: 2025/09/09 13:06:20 by phhofman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ void displayInt(const std::string &value)
     char c = static_cast<char>(i);
     float f = static_cast<float>(i);
     double d = static_cast<double>(i);
-    printChar(c, getPseudoLiteral(value));
+    if (i < 0 || i > 127)
+        printChar(c, EPseudoLiteral::NAN_D);
+    else
+        printChar(c, getPseudoLiteral(value));
+
     printInt(i, getPseudoLiteral(value));
     printFloat(f);
     printDouble(d);
